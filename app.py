@@ -33,8 +33,24 @@ def get_tweet(tweet_id):
         if tweet.get('id') == tweet_id:
             return jsonify(tweet)
     return jsonify({'error': 'Tweet not found'}), 404
+@app.route('/tweet', methods=['POST'])
+def create_tweet():
+    try:
+        # Retrieve data from the request
+        data = request.get_json()
+
+        # Validate the required fields in the data
+        if 'text' not in data:
+            raise ValueError("Missing required field: 'text'")
+
+        # Process and save the new tweet
+        # ...
+
+        return jsonify({'message': 'Tweet created successfully'}), 201
+
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 
